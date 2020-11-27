@@ -62,6 +62,7 @@ pub fn execute(benchmark_path: &str, report_path_option: Option<&str>, relaxed_i
     println!("{} {}", "Concurrency".yellow(), config.concurrency.to_string().purple());
     println!("{} {}", "Iterations".yellow(), config.iterations.to_string().purple());
     println!("{} {}", "Rampup".yellow(), config.rampup.to_string().purple());
+    println!("{} {}", "Timeout (s)".yellow(), config.timeout.to_string().purple());
   }
 
   println!("{} {}", "Base URL".yellow(), config.base.purple());
