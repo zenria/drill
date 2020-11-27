@@ -6,11 +6,13 @@ use crate::reader;
 
 const NITERATIONS: i64 = 1;
 const NRAMPUP: i64 = 0;
+const TIMEOUT: i64 = 10;
 
 pub struct Config {
   pub base: String,
   pub concurrency: i64,
   pub iterations: i64,
+  pub timeout: i64,
   pub relaxed_interpolations: bool,
   pub no_check_certificate: bool,
   pub rampup: i64,
@@ -32,6 +34,11 @@ impl Config {
     let concurrency = read_i64_configuration(config_doc, &interpolator, "concurrency", iterations);
     let rampup = read_i64_configuration(config_doc, &interpolator, "rampup", NRAMPUP);
     let base = read_str_configuration(config_doc, &interpolator, "base", "");
+    let timeout = read_i64_configuration(config_doc, &interpolator, "timeout", TIMEOUT);
+
+    if timeout < 0 {
+      panic!("timemout must be a positive integer, 0 to disable timeout")
+    }
 
     if concurrency > iterations {
       panic!("The concurrency can not be higher than the number of iterations")
@@ -46,6 +53,7 @@ impl Config {
       rampup,
       quiet,
       nanosec,
+      timeout,
     }
   }
 }
